@@ -18,7 +18,7 @@ import {
     LambdaRuntimeResourceObserver,
     S3WebResourceObserver
 } from '../lib/govcloud/cfn-resource-observer';
-import { AppRegistry } from '../lib/utils/app-registry-aspects';
+
 import { AwsDeploymentPartitionAspects } from '../lib/utils/aws-deployment-partition-aspects';
 import { LambdaAspects } from '../lib/utils/lambda-aspect';
 
@@ -27,8 +27,7 @@ const solutionID = process.env.SOLUTION_ID ?? app.node.tryGetContext('solution_i
 const version = process.env.VERSION ?? app.node.tryGetContext('solution_version');
 const solutionName = process.env.SOLUTION_NAME ?? app.node.tryGetContext('solution_name');
 const namespace = process.env.APP_NAMESPACE ?? app.node.tryGetContext('app_namespace');
-const applicationType = app.node.tryGetContext('application_type');
-const applicationName = app.node.tryGetContext('app_registry_name');
+
 const applicationTrademarkName = app.node.tryGetContext('application_trademark_name');
 
 const dus = new DusStack(app, 'DocUnderstanding', {
@@ -45,17 +44,6 @@ const dus = new DusStack(app, 'DocUnderstanding', {
 
 // adding cdk-nag checks
 cdk.Aspects.of(app).add(new AwsSolutionsChecks());
-
-// adding app registry
-cdk.Aspects.of(app).add(
-    new AppRegistry(dus, 'AppRegistry', {
-        solutionID: solutionID,
-        solutionVersion: version,
-        solutionName: solutionName,
-        applicationType: applicationType,
-        applicationName: applicationName
-    })
-);
 
 // adding lambda layer to all lambda functions for injecting user-agent for SDK calls to AWS services.
 cdk.Aspects.of(app).add(
