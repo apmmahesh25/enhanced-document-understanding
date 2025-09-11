@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import uk.org.webcompere.systemstubs.environment.EnvironmentVariables;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.builder.config.CustomUserAgentConfig;
-
 import uk.org.webcompere.systemstubs.jupiter.SystemStub;
 import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 import org.junit.jupiter.api.Test;

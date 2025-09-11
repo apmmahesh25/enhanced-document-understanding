@@ -1,6 +1,6 @@
 {
   "name": "enhanced-document-understanding-on-aws-infrastructure",
-  "version": "1.1.18",
+  "version": "1.2.0",
   "bin": {
     "infrastructure": "bin/dus.js"
   },
@@ -36,7 +36,6 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@aws-cdk/aws-servicecatalogappregistry-alpha": "2.140.0-alpha.0",
     "@aws-solutions-constructs/aws-apigateway-lambda": "^2.56.0",
     "@aws-solutions-constructs/aws-cloudfront-s3": "^2.56.0",
     "@aws-solutions-constructs/aws-eventbridge-lambda": "^2.56.0",
@@ -62,9 +61,6 @@
     "uuid": "^9.0.1"
   },
   "overrides": {
-    "@aws-sdk/client-sts": {
-      "fast-xml-parser": "^4.4.1"
-    },
     "cross-spawn": "^7.0.5"
   },
   "exclude": [
