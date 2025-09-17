@@ -13,6 +13,9 @@ describe('When App is created', () => {
     let template: Template;
     let jsonTemplate: { [key: string]: any };
     let stack: cdk.Stack;
+    const solutionId = process.env.SOLUTION_ID ?? 'undefined';
+    const solutionName = process.env.SOLUTION_NAME ?? 'undefined';
+    const solutionVersion = process.env.VERSION ?? 'undefined';
 
     beforeAll(() => {
         [template, jsonTemplate, stack] = buildStack();
@@ -56,15 +59,15 @@ describe('When App is created', () => {
         it('should have a description in the nested stack', () => {
             const dusStack = stack as DusStack;
             expect(Template.fromStack(dusStack.textractWorkflow).toJSON()['Description']).toEqual(
-                'Nested Stack that deploys components to interact with Amazon Textract for uploaded documents'
+                `(${solutionId}) - ${solutionName} - Nested Stack that deploys components to interact with Amazon Textract for uploaded documents - Version ${solutionVersion}`
             );
 
             expect(Template.fromStack(dusStack.entityDetectionWorkflow).toJSON()['Description']).toEqual(
-                'Nested Stack that deploys components to interact with Amazon Comprehend and Amazon Comprehend Medical for uploaded documents'
+                `(${solutionId}) - ${solutionName} - Nested Stack that deploys components to interact with Amazon Comprehend and Amazon Comprehend Medical for uploaded documents - Version ${solutionVersion}`
             );
 
             expect(Template.fromStack(dusStack.redactionWorkflow).toJSON()['Description']).toEqual(
-                'Nested Stack that deploys components to redact content in uploaded documents'
+                `(${solutionId}) - ${solutionName} - Nested Stack that deploys components to redact content in uploaded documents - Version ${solutionVersion}`
             );
         });
 
@@ -152,7 +155,7 @@ describe('When App is created', () => {
         it('should have a description in the nested UI stack', () => {
             const dusStack = stack as DusStack;
             expect(Template.fromStack(dusStack.uiInfrastructure.nestedUIStack).toJSON()['Description']).toEqual(
-                'Nested stack that deploys UI components that include an S3 bucket for web assets and a CloudFront distribution'
+                `(${solutionId}) - ${solutionName} - Nested stack that deploys UI components that include an S3 bucket for web assets and a CloudFront distribution - Version ${solutionVersion}`
             );
         });
     });
@@ -192,7 +195,7 @@ describe('When App is created', () => {
         it('should have a description in the nested stack', () => {
             const dusStack = stack as DusStack;
             expect(Template.fromStack(dusStack.indexedStorage.kendraCaseSearch).toJSON()['Description']).toEqual(
-                'Nested Stack that creates the Kendra Index'
+                `(${solutionId}) - ${solutionName} - Nested Stack that creates the Kendra Index for document search - Version ${solutionVersion}`
             );
         });
 

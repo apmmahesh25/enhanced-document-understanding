@@ -20,7 +20,7 @@ function checkDdbEnvSetup() {
 function checkRedactionPrefixEnvSetup() {
     if (process.env.S3_REDACTED_PREFIX) {
         S3_REDACTED_PREFIX = process.env.S3_REDACTED_PREFIX;
-        console.debug(`S3_REDACTED_PREFIX is: ${S3_REDACTED_PREFIX}`);
+        console.debug(`S3_REDACTED_PREFIX is: ${S3_REDACTED_PREFIX}`); // S3 prefix is not sensitive, used for debugging
     } else {
         throw new Error(
             'S3_REDACTED_PREFIX Lambda Environment variable not set, likely as Redaction workflow was not deployed'
@@ -31,14 +31,13 @@ function checkRedactionPrefixEnvSetup() {
 function checkDdbGsiNameEnvSetup() {
     if (process.env.DDB_GSI_USER_ID) {
         DDB_GSI_USER_ID = process.env.DDB_GSI_USER_ID;
-        console.debug(`DDB_GSI_USER_ID is: ${DDB_GSI_USER_ID}`);
     } else {
         throw new Error('DDB_GSI_USER_ID Lambda Environment variable not set.');
     }
 
     if (process.env.DDB_GSI_USER_DOC_ID) {
         DDB_GSI_USER_DOC_ID = process.env.DDB_GSI_USER_DOC_ID;
-        console.debug(`DDB_GSI_USER_DOC_ID is: ${DDB_GSI_USER_DOC_ID}`);
+        console.debug(`DDB_GSI_USER_DOC_ID is: ${DDB_GSI_USER_DOC_ID}`); // Doc name is not sensitive, used for debugging
     } else {
         throw new Error('DDB_GSI_USER_DOC_ID Lambda Environment variable not set.');
     }
