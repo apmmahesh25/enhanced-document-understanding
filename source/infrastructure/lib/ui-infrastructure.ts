@@ -58,8 +58,7 @@ export class UIInfrastructure extends Construct {
                 CustomResourceRoleArn: props.customInfra.role!.roleArn,
                 AccessLoggingBucketArn: props.accessLoggingBucket.bucketArn
             },
-            description:
-                'Nested stack that deploys UI components that include an S3 bucket for web assets and a CloudFront distribution'
+            description: `(${process.env.SOLUTION_ID ?? this.node.tryGetContext('solution_id')}) - ${process.env.SOLUTION_NAME ?? this.node.tryGetContext('solution_name')} - Nested stack that deploys UI components that include an S3 bucket for web assets and a CloudFront distribution - Version ${process.env.VERSION ?? this.node.tryGetContext('solution_version')}`
         });
         (this.nestedUIStack.node.defaultChild as cdk.CfnResource).cfnOptions.condition = this.deployWebApp;
     }
