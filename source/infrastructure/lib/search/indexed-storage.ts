@@ -88,6 +88,10 @@ export class IndexedStorage extends Construct {
     constructor(scope: Construct, id: string, props: IndexedStorageProps) {
         super(scope, id);
 
+        const solutionId = process.env.SOLUTION_ID ?? this.node.tryGetContext('solution_id');
+        const solutionName = process.env.SOLUTION_NAME ?? this.node.tryGetContext('solution_name');
+        const solutionVersion = process.env.VERSION ?? this.node.tryGetContext('solution_version');
+
         this.openSearchCaseStorage = new OpenSearchCaseStorage(this, 'openSearchCaseSearch', {
             parameters: {
                 VpcId: props.vpcId,
@@ -95,7 +99,8 @@ export class IndexedStorage extends Construct {
                 SecurityGroupId: props.securityGroupId,
                 WriteRoleArn: props.roleArn,
                 ReadRoleArn: props.searchLambda.role!.roleArn
-            }
+            },
+            description: `(${solutionId}) - ${solutionName} - Nested Stack that creates OpenSearch serverless collection for document search - Version ${solutionVersion}`
         });
 
         this.openSearchCaseStorage.nestedStackResource!.cfnOptions.condition =
@@ -110,7 +115,7 @@ export class IndexedStorage extends Construct {
                 DocumentBucketName: props.documentBucketName,
                 ExtUserPoolId: props.extUserPoolId
             },
-            description: 'Nested Stack that creates the Kendra Index'
+            description: `(${solutionId}) - ${solutionName} - Nested Stack that creates the Kendra Index for document search - Version ${solutionVersion}`
         });
 
         this.kendraCaseSearch.nestedStackResource!.cfnOptions.condition =

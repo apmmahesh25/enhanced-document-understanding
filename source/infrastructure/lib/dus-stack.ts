@@ -140,7 +140,7 @@ export class DusStack extends cdk.Stack {
                 SamplesSourceBucketName: applicationSetup.appSetupS3Bucket.bucketName,
                 SamplesCustomResourceLambdaArn: applicationSetup.customResourceLambda.functionArn
             },
-            description: 'Nested stack that deploys sample documents'
+            description: `(${props.solutionID}) - ${props.solutionName} - Nested stack that deploys sample documents - Version ${props.solutionVersion}`
         });
 
         (this.sampleDocuments.node.defaultChild as cdk.CfnResource).cfnOptions.condition = sampleDocsCondition;
@@ -150,7 +150,9 @@ export class DusStack extends cdk.Stack {
 
         const indexedStorageParameters = new IndexedStorageParams(this, 'IndexedStorageParameters');
 
-        this.vpcStack = new VpcStack(this, 'VPCStack');
+        this.vpcStack = new VpcStack(this, 'VPCStack', {
+            description: `(${props.solutionID}) - ${props.solutionName} - Nested Stack that creates VPC infrastructure for the solution - Version ${props.solutionVersion}`
+        });
         this.vpcStack.nestedStackResource!.cfnOptions.condition =
             indexedStorageParameters.deployOpenSearchIndexCondition;
 
@@ -242,7 +244,7 @@ export class DusStack extends cdk.Stack {
                 UploadBucketArn: documentUploadBucketArn,
                 GenUUID: applicationSetup.generateUUID.getAttString('UUID')
             },
-            description: 'Nested Stack that deploys components to interact with Amazon Textract for uploaded documents'
+            description: `(${props.solutionID}) - ${props.solutionName} - Nested Stack that deploys components to interact with Amazon Textract for uploaded documents - Version ${props.solutionVersion}`
         });
         (this.textractWorkflow.node.defaultChild as cdk.CfnResource).cfnOptions.condition = textractWorkflowCondition;
 
@@ -262,7 +264,7 @@ export class DusStack extends cdk.Stack {
                 UploadBucketArn: documentUploadBucketArn,
                 GenUUID: applicationSetup.generateUUID.getAttString('UUID')
             },
-            description: 'Nested Stack that deploys components to redact content in uploaded documents'
+            description: `(${props.solutionID}) - ${props.solutionName} - Nested Stack that deploys components to redact content in uploaded documents - Version ${props.solutionVersion}`
         });
 
         (this.redactionWorkflow.node.defaultChild as cdk.CfnResource).cfnOptions.condition = redactionWorkflowCondition;
@@ -283,8 +285,7 @@ export class DusStack extends cdk.Stack {
                 UploadBucketArn: documentUploadBucketArn,
                 GenUUID: applicationSetup.generateUUID.getAttString('UUID')
             },
-            description:
-                'Nested Stack that deploys components to interact with Amazon Comprehend and Amazon Comprehend Medical for uploaded documents'
+            description: `(${props.solutionID}) - ${props.solutionName} - Nested Stack that deploys components to interact with Amazon Comprehend and Amazon Comprehend Medical for uploaded documents - Version ${props.solutionVersion}`
         });
         (this.entityDetectionWorkflow.node.defaultChild as cdk.CfnResource).cfnOptions.condition =
             comprehendWorkflowCondition;

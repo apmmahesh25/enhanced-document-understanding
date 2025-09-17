@@ -31,7 +31,7 @@ const namespace = process.env.APP_NAMESPACE ?? app.node.tryGetContext('app_names
 const applicationTrademarkName = app.node.tryGetContext('application_trademark_name');
 
 const dus = new DusStack(app, 'DocUnderstanding', {
-    description: `(${solutionID}) - ${solutionName}. Version ${version}`,
+    description: `(${solutionID}) - ${solutionName} - Version ${version}`,
     synthesizer: new cdk.DefaultStackSynthesizer({
         generateBootstrapVersionRule: false
     }),

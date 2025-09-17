@@ -87,7 +87,7 @@ exports.computeBoundingBoxes = (entity, offsetToLineIdMap, blockDict) => { // NO
                 // textract 'WORD' blocks include the enclosing punctuation, whereas comprehend entities do not.
                 // hence, we use this regex which will match if the textract word is surrounded by some extra characters.
                 const matchSurroundedEntityRegex = new RegExp(
-                    `(?<!\w)${escapeRegExp(entityWords[entityWordIdx])}(?!\w)`
+                    `(?<!\\w)${escapeRegExp(entityWords[entityWordIdx])}(?!\\w)`
                 );
                 if (matchSurroundedEntityRegex.test(lineWords[j])) {
                     // The Relationships array of a 'LINE' block from detectText is always size 1, containing 'CHILD' types
